@@ -3,6 +3,10 @@ Comparisons of Ground Motion Predictions for EEW
 
 This code package is written to compare ground motion predictions made from different algorithms. The original intent is to compare the source models coming out of geodetic algorithms for ShakeAlert, the different seismic algorithms, and the ground truth (real PGA/PGV values recorded at seismic stations). 
 
+The usage of this code package is fully dictated by the .props file. If the name of the properties file is changed, only the following line towards the top of <i>GMCOMP.py</i> needs to be modified:
+
+<i>props = Properties('gmcomp.props')</i>
+
 
 <b>Ground Motion Models (GMMs):</b>
 
