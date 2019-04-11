@@ -11,9 +11,11 @@ As such, maintaining the integrity of the .props file is key. The variables shou
 
 <i>variable=value</i>
 
-My suggestion is to copy your original .props file and create a new one for each earthquake run you want to perform such that
+Since there are lots of variables and paths, my suggestion is to copy your original .props file and create a new one for each earthquake run you want to perform such that:
 
 <i>earthquake1.props</i>, <i>earthquake2.props</i>, etc.
+
+Output file names will be modified according to specific properties you use such as earthquake name, gmpe used, gmice used, definition of peak motion, and algorithm name, so you don't need to make a new properties file for small changes such as gmpe used since the output files will not overwrite others for the same earthquake.
 
 
 <b>Ground Motion Models (GMMs):</b>
