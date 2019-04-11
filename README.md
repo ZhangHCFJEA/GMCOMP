@@ -64,4 +64,19 @@ where <i>Y</i> is either the PGA or PGV values, <i>mode</i> is 0 for PGA, 1 for 
 <i>wgrw12</i> - Worden et al. (2012)
 
 
+<b>GMCOMP_coord_tools.py</b>
+
+The coord_tools package performs standard coordinate transformations. All subroutines are array capable. Not all of them are used, but the following subroutines are available:
+
+GMCOMP_coord_tools.lla2ecef(lat,lon,alt) - lon,lat,alt to ITRF cartesian
+
+GMCOMP_coord_tools.ecef2lla(x,y,z) - ITRF Cartesian to lon,lat,alt
+
+GMCOMP_coord_tools.dxyz2dneu(dx,dy,dz,lat,lon) - displacement in xyz to neu
+
+GMCOMP_coord_tools.ll2utm(lon,lat,lon0,lat0) - lon/lat to UTM
+
+GMCOMP_coord_tools.utm2ll(UTMeasting,UTMnorthing,lon0,lat0) - UTM to lon/lat
+
+
 
