@@ -7,6 +7,14 @@ The usage of this code package is fully dictated by the .props file. If the name
 
 <i>props = Properties('gmcomp.props')</i>
 
+As such, maintaining the integrity of the .props file is key. The variables should have no spaces on a line such that:
+
+<i>variable=value</i>
+
+My suggestion is to copy your original .props file and create a new one for each earthquake run you want to perform such that
+
+<i>earthquake1.props</i>, <i>earthquake2.props</i>, etc.
+
 
 <b>Ground Motion Models (GMMs):</b>
 
