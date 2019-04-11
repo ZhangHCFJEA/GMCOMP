@@ -8,47 +8,60 @@ This code package is written to compare ground motion predictions made from diff
 
 There are two types of GMMs within GMCOMP, Ground Motion Prediction Equations (GMPEs) and Ground Motion Intensity Conversion Equations (GMICEs). The two Python packages are aptly called <i>GMPE.py</i> and <i>GMICE.py</i>.
 
-<i>GMPE.py</i> - There are currently 4 GMPEs within the main package that compute PGA or PGV. The name of the GMPE is stored in the properties dictionary (read from the .props file), and is called within GMPE.py through props.getgmpe(). To perform ground motion predictions, the following is called:
+<i>GMPE.py</i> - There are currently 4 GMPEs within the main package that compute PGA or PGV. The name of the GMPE is stored in the properties dictionary (read from the .props file), and is called within GMPE.py through <i>props.getgmpe()</i>. To perform ground motion predictions, the following is called:
 
-GMPE.Y(M, Rrup, Rjb, Rx, Ztor, Zhyp, VS30, Hw, W, dip, rake, mode, props)
+<i>Y = GMPE.Y(M, Rrup, Rjb, Rx, Ztor, Zhyp, VS30, Hw, W, dip, rake, mode, props)</i>
 
 and the return is either the values of PGA or PGV at the locations specified. Here, the locations of interest are embedded within the different distance measures and site conditions.
 
 The variables are:
 
-M - magnitude (single value)
+<i>M</i> - magnitude (single value)
 
-Rrup - Rupture distance (km, a numpy array, n by 1, where n is the number of sites/locations you are interested in)
+<i>Rrup</i> - Rupture distance (km, a numpy array, n by 1, where n is the number of sites/locations you are interested in)
 
-Rjb - Joyner Boore distance (km, array)
+<i>Rjb</i> - Joyner Boore distance (km, array)
 
-Rx - Distance to the updip projection of the fault plane (km, array)
+<i>Rx</i> - Distance to the updip projection of the fault plane (km, array)
 
-Ztor - Depth to the top of the rupture plane (km, array)
+<i>Ztor</i> - Depth to the top of the rupture plane (km, array)
 
-Zhyp - hypocentral depth (km, single value)
+<i>Zhyp </i>- hypocentral depth (km, single value)
 
-VS30 - Shear wave velocity in upper 30 meters at site (m/s, array)
+<i>VS30</i> - Shear wave velocity in upper 30 meters at site (m/s, array)
 
-Hw - Hanging wall flag (1 for on hanging wall or 0 for not, array)
+<i>Hw</i> - Hanging wall flag (1 for on hanging wall or 0 for not, array)
 
-W - width of fault plane (km, single value)
+<i>W</i> - width of fault plane (km, single value)
 
-dip - dip of the fault plane (degrees, single value)
+<i>dip</i> - dip of the fault plane (degrees, single value)
 
-rake - rake of the earthwauke (degrees, single value)
+<i>rake</i> - rake of the earthwauke (degrees, single value)
 
-mode - 0 for PGA, 1 for PGV. PGV is not fully operational
+<i>mode</i> - 0 for PGA, 1 for PGV. PGV is not fully operational
 
-props - the dictionary of properties.
+<i>props</i> - the dictionary of properties.
 
 The 4 different GMPEs are:
 
-cy08 - Chiou and Youngs (2008)
+<i>cy08</i> - Chiou and Youngs (2008)
 
-cb14 - Campbell and Bozorgnia (2014)
+<i>cb14</i> - Campbell and Bozorgnia (2014)
 
-ba08 - Boore and Atkinson (2008)
+<i>ba08</i> - Boore and Atkinson (2008)
 
-bradley13 - Bradley (2013)
+<i>bradley13</i> - Bradley (2013)
+
+
+<i> GMICE.py </i> - There are two GMICEs embedded within GMICE.py. They both can take in either the PGA or PGV values and convert to instrumental MMI. The particular GMICE equation used is embedded in the properties dictionary, accessible through props.getgmice(). The usage is the following:
+
+<i>MMI = GMICE.MMI_Y(Y, mode, props)</i>
+
+where <i>Y</i> is either the PGA or PGV values, <i>mode</i> is 0 for PGA, 1 for PGV, and <i>props</i> is the dictionary of properties. The two GMICE equations are as follows:
+
+<i>wald99</i> - Wald et al. (1999)
+
+<i>wgrw12</i> - Worden et al. (2012)
+
+
 
