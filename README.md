@@ -27,7 +27,7 @@ shapely
 
 numpy
 
-For plotting, I have set up several GMT scripts. The most annoying thing with GMT is ensuring your path is correct. I have added the GMT path as a variable in the props file; this should be the same as in your .bashrc file. 
+For plotting, I have set up several GMT scripts. The most annoying thing with GMT is ensuring your path is correct. I have added the GMT path as a variable in the props file; this should be the same as in your .bashrc file. If your version of GMT is finnicky, simply turn off plotting in the props file.
 
 
 <b>Ground Motion Models (GMMs):</b>
