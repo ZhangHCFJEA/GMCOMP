@@ -21,11 +21,11 @@ Output file names will be modified according to specific properties you use such
 
 In order to run GMCOMP, you will need several Python3 packages. On OSX, use <i>pip3</i> for all of these, on other operating systems it will be dependent on your package manager, but these are fairly standard packages.
 
-obspy
+<i>obspy</i>
 
-shapely
+<i>shapely</i>
 
-numpy
+<i>numpy</i>
 
 For plotting, I have set up several GMT scripts. The most annoying thing with GMT is ensuring your path is correct. I have added the GMT path as a variable in the props file; this should be the same as in your .bashrc file. If your version of GMT is finnicky, simply turn off plotting in the props file.
 
