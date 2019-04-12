@@ -1,5 +1,5 @@
 # GMCOMP
-Comparisons of Ground Motion Predictions for EEW
+<b>Comparisons of Ground Motion Predictions for EEW</b>
 
 This code package is written to compare ground motion predictions made from different algorithms. The original intent is to compare the source models coming out of geodetic algorithms for ShakeAlert, the different seismic algorithms, and the ground truth (real PGA/PGV values recorded at seismic stations). 
 
@@ -16,6 +16,18 @@ Since there are lots of variables and paths, my suggestion is to copy your origi
 <i>earthquake1.props</i>, <i>earthquake2.props</i>, etc.
 
 Output file names will be modified according to specific properties you use such as earthquake name, gmpe used, gmice used, definition of peak motion, and algorithm name, so you don't need to make a new properties file for small changes such as gmpe used since the output files will not overwrite others for the same earthquake.
+
+<b>Prerequisites</b>
+
+In order to run GMCOMP, you will need several Python3 packages. On OSX, use <i>pip3</i> for all of these, on other operating systems it will be dependent on your package manager, but these are fairly standard packages.
+
+obspy
+
+shapely
+
+numpy
+
+For plotting, I have set up several GMT scripts. The most annoying thing with GMT is ensuring your path is correct. I have added the GMT path as a variable in the props file; this should be the same as in your .bashrc file. 
 
 
 <b>Ground Motion Models (GMMs):</b>
