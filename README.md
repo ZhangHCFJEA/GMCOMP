@@ -113,6 +113,8 @@ On Macs, the easiest way to get GMT5 is through homebrew such that:
 
 <i>brew install gmt@5</i>
 
+This will place your GMT path in <i>/usr/local/Cellar/gmt/"version"/bin</i>.
+
 
 
 
