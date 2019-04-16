@@ -113,7 +113,17 @@ On Macs, the easiest way to get GMT5 is through homebrew such that:
 
 <i>brew install gmt@5</i>
 
-This will place your GMT path in <i>/usr/local/Cellar/gmt/"version"/bin</i>.
+This will place your GMT path in: 
+
+<i>/usr/local/Cellar/gmt/"version"/bin</i>
+
+The main plotting script is <i>GMCOMP_gmtplots.py</i> and this will be called at the end of <i>GMCOMP.py</i>. A number of GMT scripts will be created in your output directory (outputdir in .props), and you can modify these to change formatting of figures according to your needs. You can simply go to your output directory, modify, and rerun the following from the command line:
+
+./plot_mmibiases
+
+./plot_cdf_fp
+
+./plot_bias_map
 
 
 
