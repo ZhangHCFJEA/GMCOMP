@@ -105,4 +105,15 @@ GMCOMP_coord_tools.ll2utm(lon,lat,lon0,lat0) - lon/lat to UTM
 GMCOMP_coord_tools.utm2ll(UTMeasting,UTMnorthing,lon0,lat0) - UTM to lon/lat
 
 
+<b>Plotting</b>
+
+In the .props file, there are three variables related to plotting. <b><i>plotson</i></b> is either <i>yes</i> or <i>no</i> to turn on plotting, <b><i>gmtpath</b></i> controls the path to your GMT bin folder, and <b><i>gmtversion</b></i> gives the overarching version of GMT (right now only 5 is supported but I will write GMT4 scripts eventually).
+
+On Macs, the easiest way to get GMT5 is through homebrew such that:
+
+<i>brew install gmt@5</i>
+
+
+
+
 
