@@ -117,15 +117,27 @@ This will place your GMT path in:
 
 <i>/usr/local/Cellar/gmt/"version"/bin</i>
 
-The main plotting script is <i>GMCOMP_gmtplots.py</i> and this will be called at the end of <i>GMCOMP.py</i>. A number of GMT scripts will be created in your output directory (outputdir in .props), and you can modify these to change formatting of figures according to your needs. You can simply go to your output directory, modify, and rerun the following from the command line:
+The main plotting script is <i>GMCOMP_gmtplots.py</i> and this will be called at the end of <i>GMCOMP.py</i>. A number of GMT scripts will be created in your output directory (outputdir in .props), and you can modify these to change formatting of figures according to your needs. You can simply go to your output directory, modify, and rerun the following from the command line in the main GMCOMP directory (since there are path references that wouldn't work within the output directory):
 
-./plot_mmibiases
+./plot_mmibias
+
+This creates MMI Bias PDFs as a function of warning time. If the warning threshold is not exceeded, I use theoretical S wave traveltimes derived from the Obspy taup package. 
 
 ./plot_cdf_fp
 
-./plot_bias_map
+This creates a pseudo-cdf and false-positive chart. What I mean by pseudo-cdf is the plot is the cumulative number of warned stations as a function of warning time, however, that number can decrease as the model results are updated. This would assume optimal cancellations of alerts, which is not the current paradigm. 
 
+./plot_quad
 
+This creates a plot of observed versus predicted MMI. The reason I call it a quad plot is the four quadrants can be segregated into true positive (TP), true negative (TN), false positive (FP), and false negative (FN). The dots are color-coded by warning time, fully saturated black dots represent no or negative warning time. The vertical and horizontal lines are modified by the mmiwarnthreshold defined in the .props file.
+
+./plot_warntime
+
+This plots the observed MMI versus the warning time. The color coding is by MMI bias (predicted minus observed). The horizontal line is modified by the mmiwarnthreshold defined in the .props file.
+
+./plot_costratio
+
+This plots the cost savings performance metric, Q as a function of the cost ratio, r.
 
 
 
