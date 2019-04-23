@@ -1,0 +1,146 @@
+####################################################
+#Overall properties
+#This file defines the tunable parameters for the 
+#ground motion comparisons. Do not leave spaces between
+#the variables and their values, i.e.:
+#gmpe=cy08
+#not
+#gmpe= cy08
+####################################################
+eq=Napa2014
+outputdir=gmcomp_out/
+srcmoddir=srcmod/
+xmldir=xmlfiles/
+accdatadir=seismicdata/Napa2014/accel/
+accchanfile=seismicdata/Napa2014/Napa2014_sm.chan
+#mmi cutoff is the minimum mmi to compare to. Stations
+#with instrumental mmi less than this are disregarded 
+#note, mmi 1 is minimum, but instrumental goes lower
+mmithreshold=1
+#mmi warn threshold is what we use to determine false alerts
+#and warning times. MMI=4 is fairly standard
+mmiwarnthreshold=4
+#ttot is the total number of seconds to consider
+ttot=300
+####################################################
+#Event properties
+####################################################
+#Origin Time Info
+ot_yr=2014
+ot_mo=8
+ot_dy=24
+ot_hr=10
+ot_mn=20
+ot_sc=44
+#True origin information (depth is km, positive down,
+#negative for west or south)
+eqlon=-122.312
+eqlat=38.215
+eqdep=11.1
+####################################################
+#Ground Motion Properties
+####################################################
+#GMPE gives which gmpe to use
+#cy08 = Chiou and Youngs 2008
+#ba08 - Boore and Atkinson 2008
+#brad13 - Bradley 2013
+#cb14 - Campbell and Bozorgnia 2014
+gmpe=cy08
+#GMICE equation, currently only wald99 and wgrw12
+gmice=wald99
+#MMI component defines which component to use. Options
+#are e, n, v, h, t, or m. t is total, h is horizontal, m is max of e/n/v 
+mmicomp=m
+#VS30 file - The one I attached is from a grid of VS30 values across the US
+vs30file=vs30.txt
+#p value is for average rupture distance of Thompson and Baltay
+p=-1.5
+#rruporrp defines using rrup or rp in the GMPEs. Only used for FF algorithms
+rruporrp=rp
+#Peak slip percentage - the fault surface to compute distances to (not used now)
+peakslipper=90
+####################################################
+#Finite Fault Files 
+#Since each algorithm will output a new message file
+#for each second, the FF file read here is simply
+#a list of xml files. Within the list, include the 
+#subdirectory. These subdirectories should be within
+#the xml file folder defined above (xmldir)
+####################################################
+numffmessages=2
+ffmessage1=glarms_napa.txt
+ffalg1=glarms
+ffotoffset1=0
+ffmessage2=gfast_napa.txt
+ffalg2=gfast
+ffotoffset2=0
+ffmessage3=befores_napa.txt
+ffalg3=befores
+ffotoffset3=0
+####################################################
+#Line Source Files (finder is included here)
+#Since each algorithm will output a new message file
+#for each second, the LS file read here is simply
+#a list of xml files. Within the list, include the 
+#subdirectory. These subdirectories should be within
+#the xml file folder defined above (xmldir)
+#A line source does not include slip on the fault. This
+#is the primary difference between line source files
+#and finite fault files, even though they use the
+#same xml format
+####################################################
+numlsmessages=1
+lsmessage1=finder_napa.txt
+lsalg1=finder
+lsotoffset1=0
+####################################################
+#Core Messages (only with core message file, finder
+#and geodetic algorithms exempted). Same as FF message
+####################################################
+numcoremessages=1
+coremessage1=epic_napa.txt
+corealg1=epic
+coreotoffset1=0
+####################################################
+#EQInfo2GM messages
+####################################################
+numeqinfo2gmmessages=1
+eqinfo2gmmessage1=eqinfo2gm_map_napa.txt
+eqinfo2gmalg1=eqinfo2gm_map
+#eqinfo2gmmessage2=eqinfo2gm_contour_napa.txt
+#eqinfo2gmalg2=eqinfo2gm_contour
+####################################################
+#ShakeMap Files
+####################################################
+numshakemapfiles=1
+shakemapfile1=shakemap_napa.txt
+shakemapalg1=ShakeMap
+####################################################
+#SRCMOD Files
+####################################################
+numsrcmodfiles=1
+srcmodfile1=s20142014SO01GALL.fsp
+srcmodalg1=srcmod_gallovic
+####################################################
+#Deformation Forward Modeling Parameters
+####################################################
+gridlat=0.5
+gridlon=0.5
+gridnum=10
+gridlatcen=38.2250
+gridloncen=-122.2866
+####################################################
+#Plotting (turn off if you dont have GMT)
+####################################################
+plotson=yes
+gmtpath=/usr/local/Cellar/gmt/5.4.5_3/bin
+#gmtpath=/usr/local/Cellar/gmt/5.4.4_2/bin
+#GMT version either 5 or 4
+gmtversion=5
+####################################################
+#Video Plotting (uses GMT and ffmpeg)
+#vidout is output directory within output directory
+####################################################
+vidson=yes
+vidoutdir=videos/
+vidlength=120
