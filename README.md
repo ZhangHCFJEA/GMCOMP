@@ -139,5 +139,17 @@ This plots the observed MMI versus the warning time. The color coding is by MMI 
 
 This plots the cost savings performance metric, Q as a function of the cost ratio, r.
 
+./plot_mmibias_map
+
+This plots the MMI bias of the first alert for an algorithm.
+
+./plot_warntime_map
+
+This plots the warning time map for a given algorithm based on the first alert times.
+
+./plot_mmiwarntimedensity
+
+This plots the probability of warning times based upon a given mmi band. I have set this to 0.5 MMI units between the warning threshold and MMI=10.
+
 
 
