@@ -17,6 +17,8 @@ Since there are lots of variables and paths, my suggestion is to copy your origi
 
 Output file names will be modified according to specific properties you use such as earthquake name, gmpe used, gmice used, definition of peak motion, and algorithm name, so you don't need to make a new properties file for small changes such as gmpe used since the output files will not overwrite others for the same earthquake.
 
+<hr><hr>
+
 <b>Prerequisites</b>
 
 In order to run GMCOMP, you will need several Python3 packages. On OSX, use <i>pip3</i> for all of these, on other operating systems it will be dependent on your package manager, but these are fairly standard packages.
