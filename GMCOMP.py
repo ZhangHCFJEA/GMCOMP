@@ -338,7 +338,6 @@ for i in range(0, int(numfffiles)):
     fffile = xmldir+str(fffiles[i])
     print('Loading finite fault file ', str(fffile))
     ffoutfile = outdir + str(earthquake) + '_' + str(ffalgs[i]) +  '_' + str(props.getgmpe()) + '_' + str(props.getgmice()) +  '_' + str(props.getmmicomp()) + '_out.txt'
-    defoutfile = outdir + str(earthquake) + '_' + str(ffalgs[i]) +  '_' + 'deformation_out.txt'
     evolfiles.append(ffoutfile)
     algorithm.append(ffalgs[i])
     
@@ -354,19 +353,20 @@ for i in range(0, int(numfffiles)):
     fff.write('#'+'MMI and PGA component used ='+' '+props.getmmicomp()+'\n')
     fff.write('#'+'site'+','+'lon'+','+'lat'+','+'OT+(s)'+','+'pga(cm/s2)'+','+'mmi'+','+'mmibias'+','+'MV'+','+'Mw'+'\n')
     fff.write('##########################################################################'+'\n')
-
-
-    deff = open(defoutfile,'w')
-    deff.write('##########################################################################'+'\n')
-    deff.write('#'+'Forward Model Deformation - Finite Fault File'+'\n')
-    deff.write('##########################################################################'+'\n')
-    deff.write('#'+'Earthquake'+' '+earthquake+'\n')
-    deff.write('#'+'Algorithm'+' '+str(ffalgs[i]) +'\n')
-    deff.write('#'+'Origin Time'+' '+str(origintime)+'\n')
-    deff.write('#'+'Grid lon from'+' '+str(float(CIlon)-0.25)+' '+str(float(CIlon)+0.25)+'\n')
-    deff.write('#'+'Grid lat from'+' '+str(float(CIlat)-0.25)+' '+str(float(CIlat)+0.25)+'\n')
-    deff.write('#'+'lon'+','+'lat'+','+'OT+(s)'+','+'E(m)'+','+'N(m)'+','+'U(m)'+'\n')
-    deff.write('##########################################################################'+'\n')
+    
+    if (props.getdefmodon() == 'yes'):
+        defoutfile = outdir + str(earthquake) + '_' + str(ffalgs[i]) +  '_' + 'deformation_out.txt'
+        deff = open(defoutfile,'w')
+        deff.write('##########################################################################'+'\n')
+        deff.write('#'+'Forward Model Deformation - Finite Fault File'+'\n')
+        deff.write('##########################################################################'+'\n')
+        deff.write('#'+'Earthquake'+' '+earthquake+'\n')
+        deff.write('#'+'Algorithm'+' '+str(ffalgs[i]) +'\n')
+        deff.write('#'+'Origin Time'+' '+str(origintime)+'\n')
+        deff.write('#'+'Grid lon from'+' '+str(float(CIlon)-0.25)+' '+str(float(CIlon)+0.25)+'\n')
+        deff.write('#'+'Grid lat from'+' '+str(float(CIlat)-0.25)+' '+str(float(CIlat)+0.25)+'\n')
+        deff.write('#'+'lon'+','+'lat'+','+'OT+(s)'+','+'E(m)'+','+'N(m)'+','+'U(m)'+'\n')
+        deff.write('##########################################################################'+'\n')
 
     k=0
     for line in open(fffile):
@@ -391,17 +391,19 @@ for i in range(0, int(numfffiles)):
         else:
             Y = GMPE.Y(FFmag, rp, rjb, rx, ztor, zhyp, VS30_val, hw, W, dip, numpy.mean(rake), 0, props)
         MMI = MMI_Y(numpy.reshape(Y,(len(Y),1)), 0, props)
-##        if (k == k2):
-##            [lonm, latm, depm, strm, dipm, lm, wm]=DEFCOMP.fp_organize(LONFF, LATFF, DEPFF)
-##            [lon_grid, lat_grid, en, nn, un] = DEFCOMP.def_grid(float(props.getgridloncen()), float(props.getgridlatcen()), float(props.getgridlon()), float(props.getgridlat()), int(props.getgridnum()), lonm, latm, depm, SSFF, DSFF, strm, dipm, wm, lm, props)
-##            for j in range(0, len(lon_grid)):
-##                lon = "{0:.4f}".format(float(lon_grid[j]))
-##                lat = "{0:.4f}".format(float(lat_grid[j]))
-##                enout = "{0:.4f}".format(float(en[j]))
-##                nnout = "{0:.4f}".format(float(nn[j]))
-##                unout = "{0:.4f}".format(float(un[j]))
-##                tout = "{0:.2f}".format(float(rt_off-ot_off))
-##                deff.write(lon+' '+lat+' '+tout+' '+enout+' '+nnout+' '+unout+'\n')
+
+        if (props.getdefmodon() == 'yes'):
+            if (k == k2):
+                [lonm, latm, depm, strm, dipm, lm, wm]=DEFCOMP.fp_organize(LONFF, LATFF, DEPFF)
+                [lon_grid, lat_grid, en, nn, un] = DEFCOMP.def_grid(float(props.getgridloncen()), float(props.getgridlatcen()), float(props.getgridlon()), float(props.getgridlat()), int(props.getgridnum()), lonm, latm, depm, SSFF, DSFF, strm, dipm, wm, lm, props)
+                for j in range(0, len(lon_grid)):
+                    lon = "{0:.4f}".format(float(lon_grid[j]))
+                    lat = "{0:.4f}".format(float(lat_grid[j]))
+                    enout = "{0:.4f}".format(float(en[j]))
+                    nnout = "{0:.4f}".format(float(nn[j]))
+                    unout = "{0:.4f}".format(float(un[j]))
+                    tout = "{0:.2f}".format(float(rt_off-ot_off))
+                    deff.write(lon+' '+lat+' '+tout+' '+enout+' '+nnout+' '+unout+'\n')
                 
 
         for j in range(0, len(LATS)):
@@ -414,7 +416,8 @@ for i in range(0, int(numfffiles)):
             tout = "{0:.2f}".format(float(rt_off-ot_off))
             fff.write(str(SITE[j])+' '+lon+' '+lat+' '+tout+' '+pgaout+' '+mmiout+' '+mmibias+' '+FFvers+' '+mw+'\n')
     fff.close()
-    deff.close()
+    if (props.getdefmodon() == 'yes'):
+        deff.close()
 
 ###########################################################
 #Read FF Line Source Messages and compute ground motion field
@@ -523,19 +526,19 @@ for i in range(0, int(numsrcmodfiles)):
     srcmodoutfile = outdir + str(earthquake) + '_' + str(srcmodalgs[i]) +  '_' + str(props.getgmpe()) + '_' + str(props.getgmice()) +  '_' + str(props.getmmicomp()) + '_out.txt'
     evolfiles.append(srcmodoutfile)
     algorithm.append(srcmodalgs[i])
-    defoutfile = outdir + str(earthquake) + '_' + str(srcmodalgs[i]) +  '_' + 'deformation_out.txt'
-
-    deff = open(defoutfile,'w')
-    deff.write('##########################################################################'+'\n')
-    deff.write('#'+'Forward Model Deformation - Finite Fault File'+'\n')
-    deff.write('##########################################################################'+'\n')
-    deff.write('#'+'Earthquake'+' '+earthquake+'\n')
-    deff.write('#'+'Algorithm'+' '+str(srcmodalgs[i]) +'\n')
-    deff.write('#'+'Origin Time'+' '+str(origintime)+'\n')
-    deff.write('#'+'Grid lon from'+' '+str(float(CIlon)-0.25)+' '+str(float(CIlon)+0.25)+'\n')
-    deff.write('#'+'Grid lat from'+' '+str(float(CIlat)-0.25)+' '+str(float(CIlat)+0.25)+'\n')
-    deff.write('#'+'lon'+','+'lat'+','+'OT+(s)'+','+'E(m)'+','+'N(m)'+','+'U(m)'+'\n')
-    deff.write('##########################################################################'+'\n')
+    if (props.getdefmodon() == 'yes'):
+        defoutfile = outdir + str(earthquake) + '_' + str(srcmodalgs[i]) +  '_' + 'deformation_out.txt'
+        deff = open(defoutfile,'w')
+        deff.write('##########################################################################'+'\n')
+        deff.write('#'+'Forward Model Deformation - Finite Fault File'+'\n')
+        deff.write('##########################################################################'+'\n')
+        deff.write('#'+'Earthquake'+' '+earthquake+'\n')
+        deff.write('#'+'Algorithm'+' '+str(srcmodalgs[i]) +'\n')
+        deff.write('#'+'Origin Time'+' '+str(origintime)+'\n')
+        deff.write('#'+'Grid lon from'+' '+str(float(CIlon)-0.25)+' '+str(float(CIlon)+0.25)+'\n')
+        deff.write('#'+'Grid lat from'+' '+str(float(CIlat)-0.25)+' '+str(float(CIlat)+0.25)+'\n')
+        deff.write('#'+'lon'+','+'lat'+','+'OT+(s)'+','+'E(m)'+','+'N(m)'+','+'U(m)'+'\n')
+        deff.write('##########################################################################'+'\n')
     
     smf = open(srcmodoutfile,'w')
     smf.write('##########################################################################'+'\n')
@@ -562,21 +565,18 @@ for i in range(0, int(numsrcmodfiles)):
     SSFF = fault_slip*(-0.9903)
     DSFF = fault_slip*(-0.1392)
 
-    #print (SSFF, DSFF)
-
-
     FL = 0.75*numpy.ones([len(fault_slip),1])*1000
     FW = 0.625*numpy.ones([len(fault_slip),1])*1000
-
-##    [lon_grid, lat_grid, en, nn, un] = DEFCOMP.def_grid(float(props.getgridloncen()), float(props.getgridlatcen()), float(props.getgridlon()), float(props.getgridlat()), int(props.getgridnum()), numpy.asarray(fault_lon), numpy.asarray(fault_lat), 1000*numpy.asarray(fault_dep)+307, numpy.asarray(SSFF), numpy.asarray(DSFF), fault_strike, fault_dip, FW, FL, props)
-##    for j in range(0, len(lon_grid)):
-##        lon = "{0:.4f}".format(float(lon_grid[j]))
-##        lat = "{0:.4f}".format(float(lat_grid[j]))
-##        enout = "{0:.4f}".format(float(en[j]))
-##        nnout = "{0:.4f}".format(float(nn[j]))
-##        unout = "{0:.4f}".format(float(un[j]))
-##        tout = "{0:.2f}".format(float(rt_off-ot_off))
-##        deff.write(lon+' '+lat+' '+tout+' '+enout+' '+nnout+' '+unout+'\n')
+    if (props.getdefmodon() == 'yes'):
+        [lon_grid, lat_grid, en, nn, un] = DEFCOMP.def_grid(float(props.getgridloncen()), float(props.getgridlatcen()), float(props.getgridlon()), float(props.getgridlat()), int(props.getgridnum()), numpy.asarray(fault_lon), numpy.asarray(fault_lat), 1000*numpy.asarray(fault_dep)+307, numpy.asarray(SSFF), numpy.asarray(DSFF), fault_strike, fault_dip, FW, FL, props)
+        for j in range(0, len(lon_grid)):
+            lon = "{0:.4f}".format(float(lon_grid[j]))
+            lat = "{0:.4f}".format(float(lat_grid[j]))
+            enout = "{0:.4f}".format(float(en[j]))
+            nnout = "{0:.4f}".format(float(nn[j]))
+            unout = "{0:.4f}".format(float(un[j]))
+            tout = "{0:.2f}".format(float(rt_off-ot_off))
+            deff.write(lon+' '+lat+' '+tout+' '+enout+' '+nnout+' '+unout+'\n')
  
 
     for j in range(0, len(LATS)):
@@ -588,7 +588,9 @@ for i in range(0, int(numsrcmodfiles)):
         tout = str('0')
         smf.write(str(SITE[j])+' '+lon+' '+lat+' '+tout+' '+pgaout+' '+mmiout+' '+mmibias+' '+'\n')
     smf.close()
-    deff.close()
+    
+    if (props.getdefmodon() == 'yes'):
+        deff.close()
 
 ###########################################################
 #Read ShakeMap Files
