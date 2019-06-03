@@ -17,7 +17,7 @@ Since there are lots of variables and paths, my suggestion is to copy your origi
 
 Output file names will be modified according to specific properties you use such as earthquake name, gmpe used, gmice used, definition of peak motion, and algorithm name, so you don't need to make a new properties file for small changes such as gmpe used since the output files will not overwrite others for the same earthquake.
 
-<hr style="height:5px;border:none;color:#333;background-color:#333;" />
+<hr>
 
 <b>Prerequisites</b>
 
@@ -31,6 +31,7 @@ In order to run GMCOMP, you will need several Python3 packages. On OSX, use <i>p
 
 For plotting, I have set up several GMT scripts. The most annoying thing with GMT is ensuring your path is correct. I have added the GMT path as a variable in the props file; this should be the same as in your .bashrc file. If your version of GMT is finnicky, simply turn off plotting in the props file.
 
+<hr>
 
 <b>Ground Motion Models (GMMs):</b>
 
@@ -91,6 +92,7 @@ where <i>Y</i> is either the PGA or PGV values, <i>mode</i> is 0 for PGA, 1 for 
 
 <i>wgrw12</i> - Worden et al. (2012)
 
+<hr>
 
 <b>GMCOMP_coord_tools.py</b>
 
@@ -106,6 +108,7 @@ GMCOMP_coord_tools.ll2utm(lon,lat,lon0,lat0) - lon/lat to UTM
 
 GMCOMP_coord_tools.utm2ll(UTMeasting,UTMnorthing,lon0,lat0) - UTM to lon/lat
 
+<hr>
 
 <b>Plotting</b>
 
