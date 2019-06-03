@@ -22,6 +22,10 @@ mmithreshold=1
 mmiwarnthreshold=4
 #ttot is the total number of seconds to consider
 ttot=300
+#runmseed will run over the miniseed files. If you
+#have run over the earthquake before, there is no
+#need to rerun this since this takes the most time
+runmseed=no
 ####################################################
 #Event properties
 ####################################################
@@ -57,8 +61,6 @@ vs30file=vs30.txt
 p=-1.5
 #rruporrp defines using rrup or rp in the GMPEs. Only used for FF algorithms
 rruporrp=rp
-#Peak slip percentage - the fault surface to compute distances to (not used now)
-peakslipper=90
 ####################################################
 #Finite Fault Files 
 #Since each algorithm will output a new message file
@@ -124,6 +126,7 @@ srcmodalg1=srcmod_gallovic
 ####################################################
 #Deformation Forward Modeling Parameters
 ####################################################
+defmodon=no
 gridlat=0.5
 gridlon=0.5
 gridnum=10
@@ -141,6 +144,6 @@ gmtversion=5
 #Video Plotting (uses GMT and ffmpeg)
 #vidout is output directory within output directory
 ####################################################
-vidson=yes
+vidson=no
 vidoutdir=videos/
 vidlength=120

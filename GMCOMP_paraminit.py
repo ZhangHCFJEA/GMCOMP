@@ -10,6 +10,10 @@ class Properties:
                                 self.dict[key]=val.strip()
                 return
 
+        ###########################################################
+        #Event properties and basic logistics
+        ###########################################################
+
         def getttot(self):
                 if 'ttot' in self.dict:
                         return self.dict['ttot']
@@ -70,10 +74,14 @@ class Properties:
                 if 'eqdep' in self.dict:
                         return self.dict['eqdep']
 
-        def getpvalue(self): 
-                if 'p' in self.dict:
-                        return self.dict['p']
-                
+        def getrunmseed(self): 
+                if 'runmseed' in self.dict:
+                        return self.dict['runmseed']
+
+        ###########################################################
+        #Ground motion model properties
+        ###########################################################
+               
         def getmmicomp(self): 
                 if 'mmicomp' in self.dict:
                         return self.dict['mmicomp']
@@ -93,9 +101,22 @@ class Properties:
         def getmmithreshold(self): 
                 if 'mmithreshold' in self.dict:
                         return self.dict['mmithreshold']
+                
         def getmmiwarnthreshold(self): 
                 if 'mmiwarnthreshold' in self.dict:
                         return self.dict['mmiwarnthreshold']
+
+        def getrruporrp(self): 
+                if 'rruporrp' in self.dict:
+                        return self.dict['rruporrp']
+
+        def getpvalue(self): 
+                if 'p' in self.dict:
+                        return self.dict['p']
+                
+        ###########################################################
+        #Finite fault message properties
+        ###########################################################
 
         def getnumffmessages(self): 
                 if 'numffmessages' in self.dict:
@@ -122,6 +143,10 @@ class Properties:
                                 fname = self.dict[fmess]
                                 ffalgs.append(fname)
                 return(ffalgs)
+        
+        ###########################################################
+        #Line source message properties
+        ###########################################################
 
         def getnumlsmessages(self): 
                 if 'numlsmessages' in self.dict:
@@ -149,6 +174,10 @@ class Properties:
                                 lsalgs.append(fname)
                 return(lsalgs)
 
+        ###########################################################
+        #Coreinfo message properties (for just point source algs)
+        ###########################################################
+
         def getnumcoremessages(self): 
                 if 'numcoremessages' in self.dict:
                         return self.dict['numcoremessages']
@@ -175,7 +204,10 @@ class Properties:
                                 corealgs.append(fname)
                 return(corealgs)
         
-
+        ###########################################################
+        #Eqinfo2gm message properties
+        ###########################################################
+        
         def getnumeqinfo2gmmessages(self): 
                 if 'numeqinfo2gmmessages' in self.dict:
                         return self.dict['numeqinfo2gmmessages']
@@ -201,6 +233,10 @@ class Properties:
                                 fname = self.dict[fmess]
                                 eqinfoalgs.append(fname)
                 return(eqinfoalgs)
+
+        ###########################################################
+        #SRCMOD fsp file properties. Separate folder for SRCMOD
+        ###########################################################
 
         def getnumsrcmodfiles(self): 
                 if 'numsrcmodfiles' in self.dict:
@@ -231,6 +267,10 @@ class Properties:
         def getsrcmoddir(self): 
                 if 'srcmoddir' in self.dict:
                         return self.dict['srcmoddir']
+                
+        ###########################################################
+        #ShakeMap XML File Properties
+        ###########################################################
 
         def getnumshakemapfiles(self): 
                 if 'numshakemapfiles' in self.dict:
@@ -257,6 +297,14 @@ class Properties:
                                 fname = self.dict[fmess]
                                 shakemapalgs.append(fname)
                 return(shakemapalgs)
+        
+        ###########################################################
+        #Deformation Forward Modeling section
+        ###########################################################
+        
+        def getdefmodon(self): 
+                if 'defmodon' in self.dict:
+                        return self.dict['defmodon']
 
         def getgridlat(self): 
                 if 'gridlat' in self.dict:
@@ -278,9 +326,9 @@ class Properties:
                 if 'gridnum' in self.dict:
                         return self.dict['gridnum']
 
-        def getrruporrp(self): 
-                if 'rruporrp' in self.dict:
-                        return self.dict['rruporrp']
+        ###########################################################
+        #Plotting Parameters
+        ###########################################################
 
         def getplotson(self): 
                 if 'plotson' in self.dict:
@@ -293,6 +341,10 @@ class Properties:
         def getgmtversion(self): 
                 if 'gmtversion' in self.dict:
                         return self.dict['gmtversion']
+
+        ###########################################################
+        #Video Plotting Parameters
+        ###########################################################
                 
         def getvidson(self): 
                 if 'vidson' in self.dict:
@@ -305,9 +357,6 @@ class Properties:
         def getvidlength(self): 
                 if 'vidlength' in self.dict:
                         return self.dict['vidlength']
-
-
-
 
 
 
