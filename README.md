@@ -161,6 +161,8 @@ This plots the warning time map for a given algorithm based on the first alert t
 
 ![Warning Time Map](../master/plots/Napa2014_warntime_map_cy08_wald99_m_rp.jpg)
 
+<hr>
+
 ./plot_mmiwarntimedensity
 
 This plots the probability of warning times based upon a given mmi band. I have set this to 0.5 MMI units between the warning threshold and MMI=10.
