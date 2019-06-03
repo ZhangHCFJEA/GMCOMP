@@ -72,13 +72,10 @@ rruporrp=rp
 numffmessages=2
 ffmessage1=glarms_napa.txt
 ffalg1=glarms
-ffotoffset1=0
 ffmessage2=gfast_napa.txt
 ffalg2=gfast
-ffotoffset2=0
 ffmessage3=befores_napa.txt
 ffalg3=befores
-ffotoffset3=0
 ####################################################
 #Line Source Files (finder is included here)
 #Since each algorithm will output a new message file
@@ -94,7 +91,6 @@ ffotoffset3=0
 numlsmessages=1
 lsmessage1=finder_napa.txt
 lsalg1=finder
-lsotoffset1=0
 ####################################################
 #Core Messages (only with core message file, finder
 #and geodetic algorithms exempted). Same as FF message
@@ -102,7 +98,6 @@ lsotoffset1=0
 numcoremessages=1
 coremessage1=epic_napa.txt
 corealg1=epic
-coreotoffset1=0
 ####################################################
 #EQInfo2GM messages
 ####################################################
