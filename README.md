@@ -17,7 +17,7 @@ Since there are lots of variables and paths, my suggestion is to copy your origi
 
 Output file names will be modified according to specific properties you use such as earthquake name, gmpe used, gmice used, definition of peak motion, and algorithm name, so you don't need to make a new properties file for small changes such as gmpe used since the output files will not overwrite others for the same earthquake.
 
-<hr style="height:1px;border:none;color:#333;background-color:#333;" />
+<hr style="height:5px;border:none;color:#333;background-color:#333;" />
 
 <b>Prerequisites</b>
 
