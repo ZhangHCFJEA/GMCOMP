@@ -119,11 +119,15 @@ This will place your GMT path in:
 
 The main plotting script is <i>GMCOMP_gmtplots.py</i> and this will be called at the end of <i>GMCOMP.py</i>. A number of GMT scripts will be created in your output directory (outputdir in .props), and you can modify these to change formatting of figures according to your needs. You can simply go to your output directory, modify, and rerun the following from the command line in the main GMCOMP directory (since there are path references that wouldn't work within the output directory):
 
+<hr>
+
 ./plot_mmibias
 
 This creates MMI Bias PDFs as a function of warning time. If the warning threshold is not exceeded, I use theoretical S wave traveltimes derived from the Obspy taup package. 
 
 ![MMI Bias Density Figure](../master/plots/Napa2014_mmibias_density_cy08_wald99_m_rp.jpg)
+
+<hr>
 
 ./plot_cdf_fp
 
@@ -131,11 +135,15 @@ This creates a pseudo-cdf and false-positive chart. What I mean by pseudo-cdf is
 
 ![CDF False Positive Figure](../master/plots/Napa2014_cdf_fp_cy08_wald99_m_rp.jpg)
 
+<hr>
+
 ./plot_quad
 
 This creates a plot of observed versus predicted MMI. The reason I call it a quad plot is the four quadrants can be segregated into true positive (TP), true negative (TN), false positive (FP), and false negative (FN). The dots are color-coded by warning time, fully saturated black dots represent no or negative warning time. The vertical and horizontal lines are modified by the mmiwarnthreshold defined in the .props file.
 
 ![Quad Figure](../master/plots/Napa2014_quad_cy08_wald99_m_rp.jpg)
+
+<hr>
 
 ./plot_warntime
 
@@ -143,17 +151,23 @@ This plots the observed MMI versus the warning time. The color coding is by MMI 
 
 ![Warning Time MMI Figure](../master/plots/Napa2014_warntime_obsmmi_cy08_wald99_m_rp.jpg)
 
+<hr>
+
 ./plot_costratio
 
 This plots the cost savings performance metric, Q as a function of the cost ratio, r.
 
 ![Cost Ratio Figure](../master/plots/Napa2014_costratio_cy08_wald99_m_rp.jpg)
 
+<hr>
+
 ./plot_mmibias_map
 
 This plots the MMI bias of the first alert for an algorithm.
 
 ![MMI Bias Map](../master/plots/Napa2014_mmibias_map_cy08_wald99_m_rp.jpg)
+
+<hr>
 
 ./plot_warntime_map
 
