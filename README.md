@@ -130,6 +130,10 @@ The xmlreader section contains 5 different xml readers for source information. T
 
 </event_message>
 
+The output of the <i>cireader</i> are two lists, the first the <i>mess_overview</i> which contains the information from the event_message tag and second the <i>mess_details</i> which contains the source parameters such as location, magnitude, and origin time. 
+
+The next two subroutines both read finite fault information except the second one only reads a line source finite fault message (<i>ffreader</i> and <i>ffreader_line</i>). 
+
 <hr>
 
 <b>GMCOMP_coord_tools.py</b>
