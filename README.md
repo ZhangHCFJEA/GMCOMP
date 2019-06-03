@@ -17,6 +17,10 @@ Since there are lots of variables and paths, my suggestion is to copy your origi
 
 Output file names will be modified according to specific properties you use such as earthquake name, gmpe used, gmice used, definition of peak motion, and algorithm name, so you don't need to make a new properties file for small changes such as gmpe used since the output files will not overwrite others for the same earthquake.
 
+If everything is setup correctly, you should be able to run the code with:
+
+<i>python3 GMCOMP.py</i>
+
 <hr>
 
 <b>Prerequisites</b>
