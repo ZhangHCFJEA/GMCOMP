@@ -123,35 +123,49 @@ The main plotting script is <i>GMCOMP_gmtplots.py</i> and this will be called at
 
 This creates MMI Bias PDFs as a function of warning time. If the warning threshold is not exceeded, I use theoretical S wave traveltimes derived from the Obspy taup package. 
 
+![MMI Bias Density Figure](../master/plots/Napa2014_mmibias_density_cy08_wald99_m_rp.jpg)
+
 ./plot_cdf_fp
 
 This creates a pseudo-cdf and false-positive chart. What I mean by pseudo-cdf is the plot is the cumulative number of warned stations as a function of warning time, however, that number can decrease as the model results are updated. This would assume optimal cancellations of alerts, which is not the current paradigm. 
+
+![CDF False Positive Figure](../master/plots/Napa2014_cdf_fp_cy08_wald99_m_rp.jpg)
 
 ./plot_quad
 
 This creates a plot of observed versus predicted MMI. The reason I call it a quad plot is the four quadrants can be segregated into true positive (TP), true negative (TN), false positive (FP), and false negative (FN). The dots are color-coded by warning time, fully saturated black dots represent no or negative warning time. The vertical and horizontal lines are modified by the mmiwarnthreshold defined in the .props file.
 
+![Quad Figure](../master/plots/Napa2014_quad_cy08_wald99_m_rp.jpg)
+
 ./plot_warntime
 
 This plots the observed MMI versus the warning time. The color coding is by MMI bias (predicted minus observed). The horizontal line is modified by the mmiwarnthreshold defined in the .props file.
+
+![Warning Time MMI Figure](../master/plots/Napa2014_warntime_obsmmi_cy08_wald99_m_rp.jpg)
 
 ./plot_costratio
 
 This plots the cost savings performance metric, Q as a function of the cost ratio, r.
 
+![Cost Ratio Figure](../master/plots/Napa2014_costratio_cy08_wald99_m_rp.jpg)
+
 ./plot_mmibias_map
 
 This plots the MMI bias of the first alert for an algorithm.
+
+![MMI Bias Map](../master/plots/Napa2014_mmibias_map_cy08_wald99_m_rp.jpg)
 
 ./plot_warntime_map
 
 This plots the warning time map for a given algorithm based on the first alert times.
 
+![Warning Time Map](../master/plots/Napa2014_warntime_map_cy08_wald99_m_rp.jpg)
+
 ./plot_mmiwarntimedensity
 
 This plots the probability of warning times based upon a given mmi band. I have set this to 0.5 MMI units between the warning threshold and MMI=10.
 
-![Optional Text](../master/plots/Napa2014_mmi_warntime_density_cy08_wald99_m_rp.jpg)
+![Warning Time Density Plot](../master/plots/Napa2014_mmi_warntime_density_cy08_wald99_m_rp.jpg)
 
 
 
