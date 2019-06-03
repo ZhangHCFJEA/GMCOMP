@@ -151,5 +151,7 @@ This plots the warning time map for a given algorithm based on the first alert t
 
 This plots the probability of warning times based upon a given mmi band. I have set this to 0.5 MMI units between the warning threshold and MMI=10.
 
+![Optional Text](/plots/Napa2014_mmi_warntime_density_cy08_wald_m_rp.jpg)
+
 
 
