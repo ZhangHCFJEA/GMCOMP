@@ -94,6 +94,31 @@ where <i>Y</i> is either the PGA or PGV values, <i>mode</i> is 0 for PGA, 1 for 
 
 <hr>
 
+<b>MSG_xmlreader.py</b>
+
+The xmlreader section contains 5 different xml readers for source information. The most basic is the <i>cireader</i>, which takes in a point source model. An example coreinfo message is below:
+
+<event_message alg_vers="3.1.0-2018-04-09" category="live" instance="E2@eew-bk-dev1" message_type="new" orig_sys="elarms" ref_id="0" ref_src="" timestamp="2018-04-25T20:53:27Z" version="0">
+
+  <core_info id="1497">
+    <mag units="Mw">5.6094</mag>
+    <mag_uncer units="Mw">0.3366</mag_uncer>
+    <lat units="deg">38.2250</lat>
+    <lat_uncer units="deg">0.1000</lat_uncer>
+    <lon units="deg">-122.2866</lon>
+    <lon_uncer units="deg">0.1000</lon_uncer>
+    <depth units="km">8.0000</depth>
+    <depth_uncer units="km">5.0000</depth_uncer>
+    <orig_time units="UTC">2018-04-25T20:53:24.268Z</orig_time>
+    <orig_time_uncer units="sec">1.6751</orig_time_uncer>
+    <likelihood>0.9256</likelihood>
+    <num_stations>5</num_stations>
+  </core_info>
+
+</event_message>
+
+<hr>
+
 <b>GMCOMP_coord_tools.py</b>
 
 The coord_tools package performs standard coordinate transformations. All subroutines are array capable. Not all of them are used, but the following subroutines are available:
