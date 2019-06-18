@@ -188,7 +188,7 @@ This creates a pseudo-cdf and false-positive chart. What I mean by pseudo-cdf is
 
 <hr>
 
-./plot_quad
+./plot_quad (First alert, video capable)
 
 This creates a plot of observed versus predicted MMI. The reason I call it a quad plot is the four quadrants can be segregated into true positive (TP), true negative (TN), false positive (FP), and false negative (FN). The dots are color-coded by warning time, fully saturated black dots represent no or negative warning time. The vertical and horizontal lines are modified by the mmiwarnthreshold defined in the .props file.
 
@@ -204,7 +204,7 @@ This plots the observed MMI versus the warning time. The color coding is by MMI 
 
 <hr>
 
-./plot_costratio
+./plot_costratio (First alert, video capable)
 
 This plots the cost savings performance metric, Q as a function of the cost ratio, r.
 
@@ -212,7 +212,7 @@ This plots the cost savings performance metric, Q as a function of the cost rati
 
 <hr>
 
-./plot_mmibias_map
+./plot_mmibias_map (First alert, video capable)
 
 This plots the MMI bias of the first alert for an algorithm.
 
