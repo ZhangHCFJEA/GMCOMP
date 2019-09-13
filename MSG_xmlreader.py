@@ -348,8 +348,6 @@ def eqinfo2gmreader(eqinfofile):
     eqi_dep_uncer=[]
     eqi_ot=[]
     eqi_lik=[]
-
-    pointlist=list()
     
     eqi_alg_vers = root.attrib['alg_vers']
     eqi_category = root.attrib['category']
