@@ -301,23 +301,31 @@ def makeplots(alg,numalgs,props):
         f6.write('gmt set FONT_LABEL 16p,Helvetica,black'+'\n')
         f6.write('gmt set FONT_TITLE 16p,Helvetica'+'\n')
         f6.write('makecpt -Chaxby -T0/40/5 > tmp.cpt'+'\n')
-        f6.write('psbasemap -R'+str(eqlon-1)+'/'+str(eqlon+1)+'/'+str(eqlat-1)+'/'+str(eqlat+1)+' -JM8 -Ba1f0.25:."'+props.geteq()+', '+alg[1]+'":WeSn -Y11.5i -K > $NAME.eps'+'\n')
+        f6.write('psbasemap -R'+str(eqlon-3)+'/'+str(eqlon+3)+'/'+str(eqlat-3)+'/'+str(eqlat+3)+' -JM8 -Ba1f0.25:."'+props.geteq()+', '+alg[1]+'":WeSn -Y11.5i -K > $NAME.eps'+'\n')
         f6.write('pscoast -R -J -Na -Df -O -W -K  >> $NAME.eps'+'\n')
-        f6.write('awk \'{print $2, $3, -$6}\' '+props.getoutdir()+props.geteq()+'_mmi_quad0.txt |psxy -Sc0.2 -W -R -J -O -K -Ctmp.cpt >> $NAME.eps'+'\n')
+        f6.write('awk \'{if ($5 > ' +props.getmmiwarnthreshold() + ' && $4 >= ' +props.getmmiwarnthreshold() + ' && $7 > 0) print $2, $3, -$6}\' '+props.getoutdir()+props.geteq()+'_mmi_quad0.txt |psxy -Ss0.2 -Ctmp.cpt -W -R -J -O -K  >> $NAME.eps'+'\n')
+        f6.write('awk \'{if ($5 > ' +props.getmmiwarnthreshold() + ' && $4 < ' +props.getmmiwarnthreshold() + ' && $7 > 0) print $2, $3}\' '+props.getoutdir()+props.geteq()+'_mmi_quad0.txt |psxy -Sd0.2 -W -R -J -O -K  >> $NAME.eps'+'\n')
+        f6.write('awk \'{if ($5 > ' +props.getmmiwarnthreshold() + ' && $7 <= 0) print $2, $3, -$6}\' '+props.getoutdir()+props.geteq()+'_mmi_quad0.txt |psxy -Sc0.2 -W -R -J -O -K -Ctmp.cpt >> $NAME.eps'+'\n')
 
         n=0
         for i in range(1,numalgs):
             if ((i-n*3)%3 == 0):
                 f6.write('pscoast -R -J -Na -Df -O -W -K -Ba1f0.25:."'+props.geteq()+', '+alg[i+1]+'":WeSn  -Y-5.0i -X-9i >> $NAME.eps'+'\n')
-                f6.write('awk \'{print $2, $3, -$6}\' '+props.getoutdir()+props.geteq()+'_mmi_quad'+str(i)+'.txt |psxy -Sc0.2 -W -Ctmp.cpt -R -J -O -K >> $NAME.eps'+'\n')               
+                f6.write('awk \'{if ($5 > ' +props.getmmiwarnthreshold() + ' && $4 >= ' +props.getmmiwarnthreshold() + ' && $7 > 0) print $2, $3, -$6}\' '+props.getoutdir()+props.geteq()+'_mmi_quad'+str(i)+'.txt |psxy -Ss0.2 -W -Ctmp.cpt -R -J -O -K >> $NAME.eps'+'\n')
+                f6.write('awk \'{if ($5 > ' +props.getmmiwarnthreshold() + ' && $4 < ' +props.getmmiwarnthreshold() + ' && $7 > 0) print $2, $3}\' '+props.getoutdir()+props.geteq()+'_mmi_quad'+str(i)+'.txt |psxy -Sd0.2 -W -R -J -O -K >> $NAME.eps'+'\n')
+                f6.write('awk \'{if ($5 > ' +props.getmmiwarnthreshold()+ ' && $7 <= 0) print $2, $3, -$6}\' '+props.getoutdir()+props.geteq()+'_mmi_quad'+str(i)+'.txt |psxy -Sc0.2 -W -Ctmp.cpt -R -J -O -K >> $NAME.eps'+'\n') 
                 n=n+1
             if ((i-n*3)%3 == 1):
                 f6.write('pscoast -R -J -Na -Df -O -W -K -Ba1f0.25:."'+props.geteq()+', '+alg[i+1]+'":WeSn  -X4.5i >> $NAME.eps'+'\n')
-                f6.write('awk \'{print $2, $3, -$6}\' '+props.getoutdir()+props.geteq()+'_mmi_quad'+str(i)+'.txt |psxy -Sc0.2 -W -Ctmp.cpt -R -J -O -K >> $NAME.eps'+'\n')
+                f6.write('awk \'{if ($5 > ' +props.getmmiwarnthreshold() + ' && $4 >= ' +props.getmmiwarnthreshold() + ' && $7 > 0) print $2, $3, -$6}\' '+props.getoutdir()+props.geteq()+'_mmi_quad'+str(i)+'.txt |psxy -Ss0.2 -W -Ctmp.cpt -R -J -O -K >> $NAME.eps'+'\n')
+                f6.write('awk \'{if ($5 > ' +props.getmmiwarnthreshold() + ' && $4 < ' +props.getmmiwarnthreshold() + ' && $7 > 0) print $2, $3}\' '+props.getoutdir()+props.geteq()+'_mmi_quad'+str(i)+'.txt |psxy -Sd0.2 -W -R -J -O -K >> $NAME.eps'+'\n')
+                f6.write('awk \'{if ($5 > ' +props.getmmiwarnthreshold()+ ' && $7 <= 0) print $2, $3, -$6}\' '+props.getoutdir()+props.geteq()+'_mmi_quad'+str(i)+'.txt |psxy -Sc0.2 -W -Ctmp.cpt -R -J -O -K >> $NAME.eps'+'\n') 
 
             if ((i-n*3)%3 == 2):
                 f6.write('pscoast -R -J -Na -Df -O -W -K -Ba1f0.25:."'+props.geteq()+', '+alg[i+1]+'":WeSn  -X4.5i >> $NAME.eps'+'\n')
-                f6.write('awk \'{print $2, $3, -$6}\' '+props.getoutdir()+props.geteq()+'_mmi_quad'+str(i)+'.txt |psxy -Sc0.2 -W -Ctmp.cpt -R -J -O -K >> $NAME.eps'+'\n')
+                f6.write('awk \'{if ($5 > ' +props.getmmiwarnthreshold() + ' && $4 >= ' +props.getmmiwarnthreshold() + ' && $7 > 0) print $2, $3, -$6}\' '+props.getoutdir()+props.geteq()+'_mmi_quad'+str(i)+'.txt |psxy -Ss0.2 -W -Ctmp.cpt -R -J -O -K >> $NAME.eps'+'\n')
+                f6.write('awk \'{if ($5 > ' +props.getmmiwarnthreshold() + ' && $4 < ' +props.getmmiwarnthreshold() + ' && $7 > 0) print $2, $3}\' '+props.getoutdir()+props.geteq()+'_mmi_quad'+str(i)+'.txt |psxy -Sd0.2 -W -R -J -O -K >> $NAME.eps'+'\n')
+                f6.write('awk \'{if ($5 > ' +props.getmmiwarnthreshold()+ ' && $7 <= 0) print $2, $3, -$6}\' '+props.getoutdir()+props.geteq()+'_mmi_quad'+str(i)+'.txt |psxy -Sc0.2 -W -Ctmp.cpt -R -J -O -K >> $NAME.eps'+'\n') 
 
         f6.write('psscale -O -D4i/2i/4i/0.5i  -B10f5:"Warning Time (s)":/:: -Ctmp.cpt >> $NAME.eps'+'\n') 
         f6.write('exit 0'+'\n')
@@ -342,7 +350,7 @@ def makeplots(alg,numalgs,props):
         f7.write('gmt set FONT_LABEL 16p,Helvetica,black'+'\n')
         f7.write('gmt set FONT_TITLE 16p,Helvetica'+'\n')
         f7.write('makecpt -Cpolar -T-3/3/0.5 > tmp.cpt'+'\n')
-        f7.write('psbasemap -R'+str(eqlon-1)+'/'+str(eqlon+1)+'/'+str(eqlat-1)+'/'+str(eqlat+1)+' -JM8 -Ba1f0.25:."'+props.geteq()+', '+alg[1]+'":WeSn -Y11.5i -K > $NAME.eps'+'\n')
+        f7.write('psbasemap -R'+str(eqlon-3)+'/'+str(eqlon+3)+'/'+str(eqlat-3)+'/'+str(eqlat+3)+' -JM8 -Ba1f0.25:."'+props.geteq()+', '+alg[1]+'":WeSn -Y11.5i -K > $NAME.eps'+'\n')
         f7.write('pscoast -R -J -Na -Df -O -W -K  >> $NAME.eps'+'\n')
         f7.write('awk \'{print $2, $3, $4-$5}\' '+props.getoutdir()+props.geteq()+'_mmi_quad0.txt |psxy -Sc0.2 -W -R -J -O -K -Ctmp.cpt >> $NAME.eps'+'\n')
 
@@ -383,7 +391,7 @@ def makeplots(alg,numalgs,props):
         f8.write('gmt set MAP_TITLE_OFFSET 0.25c'+'\n')
         f8.write('gmt set FONT_LABEL 16p,Helvetica,black'+'\n')
         f8.write('gmt set FONT_TITLE 16p,Helvetica'+'\n')
-        f8.write('makecpt -Chaxby -T0/0.5/0.01 -D -I > tmp.cpt'+'\n')
+        f8.write('makecpt -Chaxby -T0/50/1 -D -I > tmp.cpt'+'\n')
         f8.write('psbasemap -R'+props.getmmiwarnthreshold()+'/10/-10/50 -JX4i/4i -Ba1f0.5:"MMI":/a10f1:"Warning Time (s)"::."'+props.geteq()+', '+alg[1]+'":WeSn -Y12i  -K > $NAME.eps'+'\n')
         f8.write('psxy '+props.getoutdir()+props.geteq()+'_mmi_warntimedensity0.txt -Ctmp.cpt -R -J -P -L -O -K >> $NAME.eps'+'\n')
         f8.write('psxy -W2 -R -J -O -K << EOF >> $NAME.eps'+'\n')
@@ -421,7 +429,7 @@ def makeplots(alg,numalgs,props):
         if (numalgs%3 == 0):
             xoff='-7'
             yoff='-1'
-        f8.write('psscale -O -D3i/0i/6i/0.5ih  -B0.5f0.1:"Probability":/:: -Ctmp.cpt -X'+xoff+'i -Y'+yoff+'i >> $NAME.eps'+'\n') 
+        f8.write('psscale -O -D3i/0i/6i/0.5ih  -B0.5f0.1:"Percentage of Stations":/:: -Ctmp.cpt -X'+xoff+'i -Y'+yoff+'i >> $NAME.eps'+'\n') 
         f8.write('exit 0'+'\n')
         f8.close()
 
@@ -461,8 +469,8 @@ def analyzemmidata(evolfile, numalgs, props):
                 lon[k,0]=float(grow[2])
                 lat[k,0]=float(grow[3])
                 t[k,0]=float(grow[4])
-                mmiext[k,0]=float(grow[numalgs*3+8])
-                maxmmi[k,0]=float(grow[numalgs*3+9])
+                mmiext[k,0]=float(grow[numalgs*3+8]) #MMI exceedance time or S-wave travel time
+                maxmmi[k,0]=float(grow[numalgs*3+9]) #Max MMI at station
                 for i in range(0,numalgs):
                     mmi[k,i] = float(grow[9+3*i])
                     
@@ -476,17 +484,20 @@ def analyzemmidata(evolfile, numalgs, props):
     mmirange = numpy.linspace(-5,5,num=51)
 
     for i in range(0,numalgs):
+        #File names
         evoloutfile=props.getoutdir()+props.geteq()+'_mmi_density'+str(i)+'.txt'
         cdfoutfile=props.getoutdir()+props.geteq()+'_mmi_cdf'+str(i)+'.txt'
         qtreefile=props.getoutdir()+props.geteq()+'_mmi_quad'+str(i)+'.txt'
         costratiofile=props.getoutdir()+props.geteq()+'_mmi_costratio'+str(i)+'.txt'
         warntimedensityfile=props.getoutdir()+props.geteq()+'_mmi_warntimedensity'+str(i)+'.txt'
-        
+        cdfmmioutfile=props.getoutdir()+props.geteq()+'_mmi_cdfmmi'+str(i)+'.txt'
+        #Open files
         fevol = open(evoloutfile,'w')
         fcdf = open(cdfoutfile,'w')
         fqt = open(qtreefile,'w')
         fcr = open(costratiofile,'w')
         fwtd = open(warntimedensityfile,'w')
+        fcdfmmi = open(cdfmmioutfile,'w')
 
         mmialg = mmi[:,i]
         mmialg = mmialg.reshape((len(maxmmi),1))
@@ -542,24 +553,31 @@ def analyzemmidata(evolfile, numalgs, props):
                 tsite = t[asite]
                 twarn = tsite-mmiext[asite]
                 aqt = numpy.where(numpy.absolute(mmisite) > 0)[0]
+                aqt2 = numpy.where(numpy.absolute(mmisite) >= float(props.getmmiwarnthreshold()))[0]
 
                 mmi_pred = mmisite[aqt[0]] #mmi predicted by algorithm at site
                 mmi_obs = maxmmi[asite[0]]
                 tw = twarn[aqt[0]]
 
+                #tw2 = twarn[aqt2[0]] #Warning time to mmi exceedance
+
                 if ((float(mmi_obs) >= float(props.getmmiwarnthreshold())) & (float(mmi_pred) >= float(props.getmmiwarnthreshold()))):
+                    tw2 = twarn[aqt2[0]]
                     mpredlist.append(mmi_obs)
-                    if (tw < -50):
-                        tw = -50
-                    wtlist.append(tw)
+##                    if (tw < -50):
+##                        tw = -50
+                    wtlist.append(tw2)
+                else:
+                    tw2 = 50
 
                 mmip = "{0:.2f}".format(float(mmi_pred))
                 mmio = "{0:.2f}".format(float(mmi_obs))
-                tw =  "{0:.2f}".format(float(tw))
+                tww =  "{0:.2f}".format(float(tw))
+                tww2 =  "{0:.2f}".format(float(tw2))
                 lon_site = "{0:.4f}".format(float(lon[asite[0]]))
                 lat_site = "{0:.4f}".format(float(lat[asite[0]]))
 
-                fqt.write(siteid+' '+lon_site+' '+lat_site+' '+mmip+' '+mmio+' '+tw+'\n')
+                fqt.write(siteid+' '+lon_site+' '+lat_site+' '+mmip+' '+mmio+' '+tww+' '+tww2+'\n')
 
                 if ((mmi_pred >= float(props.getmmiwarnthreshold())) & (mmi_obs >= float(props.getmmiwarnthreshold()))):
                     truepos.append(mmi_pred)
@@ -593,7 +611,12 @@ def analyzemmidata(evolfile, numalgs, props):
 
         for j in range(0,60):
             for k in range (1, len(mmirange2)):
-                a1 = numpy.where((wtarray >= j-50) & (wtarray < j-48) & (mpredarray >= mmirange2[k-1]) & (mpredarray < mmirange2[k]) )[0]
+                if (j == 0):
+                    a1 = numpy.where((wtarray < j-49) & (mpredarray >= mmirange2[k-1]) & (mpredarray < mmirange2[k]))[0]
+                    #a1 = numpy.where((wtarray < j-49) & (float(mmi_obs)  >= mmirange2[k-1]) & (float(mmi_obs) < mmirange2[k]) )[0]
+                else:
+                    a1 = numpy.where((wtarray >= j-50) & (wtarray < j-49) & (mpredarray >= mmirange2[k-1]) & (mpredarray < mmirange2[k]))[0]
+                    #a1 = numpy.where((wtarray >= j-50) & (wtarray < j-49) & (float(mmi_obs)  >= mmirange2[k-1]) & (float(mmi_obs)  < mmirange2[k]))[0]
 
                 a2 = numpy.where((mpredarray >= mmirange2[k-1]) & (mpredarray < mmirange2[k]) )[0]
 
@@ -604,7 +627,7 @@ def analyzemmidata(evolfile, numalgs, props):
                     zval =  "{0:.4f}".format(float(0.0))
                     zval2 = "{0:.4f}".format(float(0.0))
                 else:
-                    zval =  "{0:.4f}".format(float(len(a1)/totper2))
+                    zval =  "{0:.4f}".format(float(len(a1)/totper2*100))
                     zval2 =  "{0:.4f}".format(float(len(a3)/totper2))
                     
 
@@ -614,8 +637,8 @@ def analyzemmidata(evolfile, numalgs, props):
                 fwtd.write('>-Z'+zval+'\n')
                 fwtd.write(mmilow+' '+str((j-50)*-1)+'\n')
                 fwtd.write(mmihigh+' '+str((j-50)*-1)+'\n')
-                fwtd.write(mmihigh+' '+str((j-48)*-1)+'\n')
-                fwtd.write(mmilow+' '+str((j-48)*-1)+'\n')
+                fwtd.write(mmihigh+' '+str((j-49)*-1)+'\n')
+                fwtd.write(mmilow+' '+str((j-49)*-1)+'\n')
                 fwtd.write(mmilow+' '+str((j-50)*-1)+'\n')
 
 

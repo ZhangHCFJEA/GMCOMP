@@ -31,10 +31,12 @@ import DEFCOMP
 import GMCOMP_traveltime
 import GMCOMP_gmtplots
 import os
+from shapely.geometry import Point
+from shapely.geometry.polygon import Polygon
 ###########################################################
 #Read Properties file, create dict 'props'
 ###########################################################
-props = Properties('gmcomp.props')
+props = Properties('ridgecrest.props')
 chanfile = props.getaccchanfile() #where ground motions are computed
 accdir = props.getaccdatadir()
 outdir = props.getoutdir()
@@ -144,7 +146,9 @@ if (runminiseed == 'yes'):
     k = 0
     with open(chanfile, 'rt') as chan:
         reader = csv.reader(chan, delimiter="\t")
+        #reader = csv.reader(chan, delimiter=' ')
         for row in reader:
+            print (row)
             if "#" not in row[0]:
                 smnetcode = row[0]
                 smsite = row[1]
@@ -159,49 +163,59 @@ if (runminiseed == 'yes'):
                 print('Loading strong motion station ', str(smsite))
                 if (smunits == 'counts/(cm/sec2)'):
                     if (smchannel == 'HNE' or smchannel == 'HLE' or smchannel == 'ENE'):
-                        fname_east = accdir + smsite.strip() + '.' + smchannel.strip() + '.mseed'
+                        if (smloccode == '--'):
+                            fname_east = accdir + '20190706031132.' + smnetcode.strip() + '.' + smsite.strip() + '.' + smchannel.strip() + '.mseed'
+                        else:
+                            fname_east = accdir + '20190706031132.' + smnetcode.strip() + '.' + smsite.strip() + '.' + smchannel.strip() + '.' + smloccode.strip() + '.mseed'
                         site_east = smsite
                         gain_east = smgain
                         chan_east = smchannel
                         k=k+1
                     if (smchannel == 'HNN' or smchannel == 'HLN' or smchannel == 'ENN'):
-                        fname_north = accdir + smsite.strip() + '.' + smchannel.strip() + '.mseed'
+                        if (smloccode == '--'):
+                            fname_north = accdir + '20190706031132.' + smnetcode.strip() + '.' + smsite.strip() + '.' + smchannel.strip() + '.mseed'
+                        else:
+                            fname_north = accdir + '20190706031132.' + smnetcode.strip() + '.' + smsite.strip() + '.' + smchannel.strip() + '.' + smloccode.strip() + '.mseed'
                         site_north = smsite
                         gain_north = smgain
                         chan_north = smchannel
                         k=k+1
                     if (smchannel == 'HNZ' or smchannel == 'HLZ' or smchannel == 'ENZ'):
-                        fname_vert = accdir + smsite.strip() + '.' + smchannel.strip() + '.mseed'
+                        if (smloccode == '--'):
+                            fname_vert = accdir + '20190706031132.' + smnetcode.strip() + '.' + smsite.strip() + '.' + smchannel.strip() + '.mseed'
+                        else:
+                            fname_vert = accdir + '20190706031132.' + smnetcode.strip() + '.' + smsite.strip() + '.' + smchannel.strip() + '.' + smloccode.strip() + '.mseed'
                         site_vert = smsite
                         gain_vert = smgain
                         chan_vert = smchannel
                         k=k+1
                     if (k == 3 and site_east == site_north and site_east == site_vert):
                         if (chan_east[0:2] == chan_north[0:2] and chan_east[0:2] == chan_vert[0:2]):
-                            pga_vals = SM_peakmotions.pga_measure(fname_east,fname_north,fname_vert,gain_east,gain_north,gain_vert,origintime,props)
-                            t = pga_vals[0]
-                            PGA = pga_vals[1]
-                            MMI = pga_vals[2]
-                            PGAmax = pga_vals[3]
-                            MMImax = pga_vals[4]
-                            
-                            lon = "{0:.4f}".format(float(smlon))
-                            lat = "{0:.4f}".format(float(smlat))
-                            pgamax = "{0:.4f}".format(float(PGAmax))
-                            mmimax = "{0:.2f}".format(float(MMImax))
-                            if (MMImax > mmithreshold):
-                                fsmmax.write(site_east+' '+lon+' '+lat+' '+pgamax+' '+mmimax+'\n')
-                            
-                            mmiind = 0
-                            for i in range(1,len(t)):
-                                if (MMI[i] > mmithreshold):
-                                    if (MMI[i] > mmiind):
-                                        tout = "{0:.2f}".format(float(t[i]))
-                                        pgaout = "{0:.4f}".format(float(PGA[i]))
-                                        mmiout = "{0:.2f}".format(float(MMI[i]))
+                            if (os.path.exists(fname_east) and os.path.exists(fname_north) and os.path.exists(fname_vert)):
+                                pga_vals = SM_peakmotions.pga_measure(fname_east,fname_north,fname_vert,gain_east,gain_north,gain_vert,origintime,props)
+                                t = pga_vals[0]
+                                PGA = pga_vals[1]
+                                MMI = pga_vals[2]
+                                PGAmax = pga_vals[3]
+                                MMImax = pga_vals[4]
+                                
+                                lon = "{0:.4f}".format(float(smlon))
+                                lat = "{0:.4f}".format(float(smlat))
+                                pgamax = "{0:.4f}".format(float(PGAmax))
+                                mmimax = "{0:.2f}".format(float(MMImax))
+                                if (MMImax > mmithreshold):
+                                    fsmmax.write(site_east+' '+lon+' '+lat+' '+pgamax+' '+mmimax+'\n')
+                                
+                                mmiind = 0
+                                for i in range(1,len(t)):
+                                    if (MMI[i] > mmithreshold):
+                                        if (MMI[i] > mmiind):
+                                            tout = "{0:.2f}".format(float(t[i]))
+                                            pgaout = "{0:.4f}".format(float(PGA[i]))
+                                            mmiout = "{0:.2f}".format(float(MMI[i]))
 
-                                        fsm.write(site_east+' '+lon+' '+lat+' '+tout+' '+pgaout+' '+mmiout+'\n')
-                                        mmiind = MMI[i]
+                                            fsm.write(site_east+' '+lon+' '+lat+' '+tout+' '+pgaout+' '+mmiout+'\n')
+                                            mmiind = MMI[i]
                         k=0
                         site_east=[]
                         site_north=[]
@@ -286,7 +300,7 @@ for i in range(0, len(LONS)):
 ###########################################################
 #Read Core info Messages and compute ground motions
 ###########################################################
-for i in range(0, 1):
+for i in range(0, int(numcorefiles)):
     cf = xmldir+str(corefiles[i])
     print('Loading coreinfo file ', str(cf))
     cfoutfile = outdir + str(earthquake) + '_' + str(corealgs[i]) +  '_' + str(props.getgmpe()) + '_' + str(props.getgmice()) +  '_' + str(props.getmmicomp()) + '_out.txt'
@@ -490,6 +504,7 @@ for i in range(0, int(numeqinfofiles)):
     feqi.write('#'+'site'+','+'lon'+','+'lat'+','+'OT+(s)'+','+'pga(cm/s2)'+','+'mmi'+','+'mmibias'+'\n')
     feqi.write('##########################################################################'+'\n')
     for line in open(eqifile):
+        print (xmldir+str(line.strip()))
         [mess_overview, mess_details, eqinfo_gm, eqinfotype] = MSG_xmlreader.eqinfo2gmreader(xmldir+str(line.strip()))
         
         ot_off = obspy.core.utcdatetime.UTCDateTime(mess_details[9])-origintime #origin time offset
@@ -513,6 +528,41 @@ for i in range(0, int(numeqinfofiles)):
                 pgaout = "{0:.4f}".format(float(SMpga[a1]))
                 mmiout = "{0:.2f}".format(float(SMmmi[a1]))
                 mmibias = "{0:.2f}".format(float(SMmmi[a1]-MMIS[j]))
+                tout = "{0:.2f}".format(float(rt_off-ot_off))
+                feqi.write(str(SITE[j])+' '+lon+' '+lat+' '+tout+' '+pgaout+' '+mmiout+' '+mmibias+' '+'\n')
+            k = k+1
+
+        if (eqinfotype == 'contour'):
+            SMlon = numpy.asarray(eqinfo_gm[0])
+            SMlat = numpy.asarray(eqinfo_gm[1])
+            SMpga = numpy.asarray(eqinfo_gm[2])
+            SMmmi = numpy.asarray(eqinfo_gm[3])
+            SMind = numpy.asarray(eqinfo_gm[4])
+
+            for j in range(0, len(LATS)):
+                [xsm,ysm]=GMCOMP_coord_tools.ll2utm(SMlon, SMlat, LONS[j], LATS[j])
+                [xj,yj]=GMCOMP_coord_tools.ll2utm(LONS[j], LATS[j], LONS[j], LATS[j])
+                point = Point(xj,yj)
+                mmiind = 1 #if the point is not in a contour, its given the value of MMI=1
+                pgaind = 0
+                totind = 0
+                for pind in range(0, len(SMmmi)):
+                    polyshape = list()
+                    for polyind in range(0, int(SMind[pind])):
+                        polyshape.append(Point(xsm[totind],ysm[totind]))
+                        totind=totind+1
+                    coords = [(p.x, p.y) for p in polyshape]
+                    poly = Polygon(coords)
+                    if point.within(poly):
+                        if (SMmmi[pind] > mmiind):
+                            mmiind = SMmmi[pind]
+                            pgaind = SMpga[pind]
+
+                lon = "{0:.4f}".format(float(LONS[j]))
+                lat = "{0:.4f}".format(float(LATS[j]))
+                pgaout = "{0:.4f}".format(float(pgaind))
+                mmiout = "{0:.2f}".format(float(mmiind))
+                mmibias = "{0:.2f}".format(float(mmiind-MMIS[j]))
                 tout = "{0:.2f}".format(float(rt_off-ot_off))
                 feqi.write(str(SITE[j])+' '+lon+' '+lat+' '+tout+' '+pgaout+' '+mmiout+' '+mmibias+' '+'\n')
             k = k+1
