@@ -4,7 +4,6 @@ import GMCOMP_coord_tools
 import numpy
 import xml.etree.ElementTree as ET
 
-
 def cireader(coreinfofile):
     tree = ET.parse(coreinfofile)
     root = tree.getroot()
@@ -349,6 +348,8 @@ def eqinfo2gmreader(eqinfofile):
     eqi_dep_uncer=[]
     eqi_ot=[]
     eqi_lik=[]
+
+    pointlist=list()
     
     eqi_alg_vers = root.attrib['alg_vers']
     eqi_category = root.attrib['category']
@@ -367,6 +368,7 @@ def eqinfo2gmreader(eqinfofile):
     contour_lat=list()
     contour_mmi=list()
     contour_pga=list()
+    contour_ind=list()
 
     for child in root.iter():
         ca = child.tag
@@ -416,9 +418,32 @@ def eqinfo2gmreader(eqinfofile):
                     map_lat.append(float(dataline[1]))
                     map_pga.append(float(dataline[2]))
                     map_mmi.append(float(dataline[4]))
+                    
+        if (ca == 'gmcontour_pred'):
+            eqinfotype='contour'
+            contours = child.attrib['number'] #number of contours
+        if (ca == 'MMI' and eqinfotype == 'contour'):
+            mmicontour = float(child.text)
+            contour_mmi.append(mmicontour)
+        if (ca == 'PGA' and eqinfotype == 'contour'):
+            pgacontour = float(child.text)
+            contour_pga.append(pgacontour)
+        if (ca == 'polygon' and eqinfotype == 'contour'):
+            polynum = child.attrib['number']
+            contour_ind.append(int(polynum))
+            polysplit = child.text.split()
+            for i in range (0, int(polynum)):
+                split1 = polysplit[i].split(",")
+                lat = float(split1[0])
+                lon = float(split1[1])
+                contour_lat.append(lat)
+                contour_lon.append(lon)
 
     if (eqinfotype == 'map'):
         gmout = [map_lon, map_lat, map_pga, map_mmi]
+
+    if (eqinfotype == 'contour'):
+        gmout = [contour_lon, contour_lat, contour_pga, contour_mmi, contour_ind]
             
     mess_overview = [eqi_alg_vers, eqi_category, eqi_instance, eqi_message_type, eqi_orig_sys, eqi_timestamp, eqi_version]
     mess_details = [eqi_id, eqi_mag, eqi_mag_uncer, eqi_lat, eqi_lat_uncer, eqi_lon, eqi_lon_uncer, eqi_dep, eqi_dep_uncer, eqi_ot, eqi_lik]
@@ -454,7 +479,7 @@ def shakemapreader(shakemapfile):
     return(sm_lon, sm_lat, sm_pga, sm_mmi)
 
 ##[mess_overview, mess_details, LONS, LATS, DEPS] = ffreader_line('xmlfiles/finder_napa/south_napa_finder_message_version17.xml')
-
+#[mess_overview, mess_details, gmout, eqinfotype] = eqinfo2gmreader('xmlfiles/eqinfo2gm_ridgecrest_replay/eqinfo2gm_contour_220190712_20190706_ridgecrest2_1562913780.13_0_1198_035.xml')
 ##[mess_overview, mess_details, gmout] = eqinfo2gmreader('xmlfiles/eqinfo2gm_napa/south_napa_eqinfo2gm_map_message_version0.xml')
 ##print (gmout[3])   
 #shakemapreader('xmlfiles/shakemap_napa/shakemap_napa.xml')
